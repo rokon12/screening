@@ -1,7 +1,9 @@
 package com.bazlur.screening.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,6 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/css/**", "/js/**","/img/**","/plugins/**","/bootstrap/**").permitAll()
 			.antMatchers("/", "/home").permitAll()
 			.antMatchers("/login").permitAll()
+			.antMatchers("/signup").permitAll()
 			.anyRequest().authenticated();
 	}
 
@@ -29,4 +32,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.inMemoryAuthentication()
 			.withUser("admin").password("admin").roles("USER");
 	}
+
+
+	@Bean
+	public MessageDigestPasswordEncoder messageDigestPasswordEncoder() {
+
+		return new MessageDigestPasswordEncoder("sha-256");
+	}
+
 }
