@@ -16,12 +16,12 @@ import org.springframework.web.context.request.WebRequest;
  * @author Bazlur Rahman Rokon
  * @since 11/28/16.
  */
-public class CustomConnectInterceptor implements ConnectInterceptor<Facebook> {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CustomConnectInterceptor.class);
+public class FacebookConnectInterceptor implements ConnectInterceptor<Facebook> {
+	private static final Logger LOGGER = LoggerFactory.getLogger(FacebookConnectInterceptor.class);
 
 	private SignupService signupService;
 
-	public CustomConnectInterceptor(SignupService signupService) {
+	public FacebookConnectInterceptor(SignupService signupService) {
 		this.signupService = signupService;
 	}
 

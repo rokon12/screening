@@ -1,6 +1,7 @@
 package com.bazlur.screening.config;
 
-import com.bazlur.screening.interceptor.CustomConnectInterceptor;
+import com.bazlur.screening.interceptor.FacebookConnectInterceptor;
+import com.bazlur.screening.interceptor.GoogelConnectInterceptor;
 import com.bazlur.screening.security.SecurityAuthenticationFailureHandler;
 import com.bazlur.screening.security.SecurityAuthenticationProvider;
 import com.bazlur.screening.security.SecurityAuthenticationSuccessHandler;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
@@ -30,6 +32,8 @@ import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.google.api.Google;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -67,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/login").permitAll()
 			.antMatchers("/signup").permitAll()
 			.antMatchers("/connect/**").permitAll()
+			.antMatchers("/signin/**").permitAll()
 			.antMatchers("/logout/**").authenticated()
 			.anyRequest().authenticated()
 			.and()
@@ -105,7 +110,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public ConnectController connectController() {
 		ConnectController controller = new ConnectController(connectionFactoryLocator(), connectionRepository());
-		controller.addInterceptor(new CustomConnectInterceptor(signupService));
+		controller.addInterceptor(new FacebookConnectInterceptor(signupService));
+		controller.addInterceptor(new GoogelConnectInterceptor(signupService));
 
 		return controller;
 	}
@@ -113,11 +119,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public ConnectionFactoryLocator connectionFactoryLocator() {
 		ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-		String clinetId = environment.getProperty("facebook.clientId");
-		String appSecret = environment.getProperty("facebook.clientSecret");
+		String facebookClinetId = environment.getProperty("facebook.clientId");
+		String facebookAppSecret = environment.getProperty("facebook.clientSecret");
+		log.info("facebookClinetId:{}, facebookAppSecret:{}", facebookClinetId, facebookAppSecret);
 
-		log.info("clinetId:{}, appSecret:{}", clinetId, appSecret);
-		registry.addConnectionFactory(new FacebookConnectionFactory(clinetId, appSecret));
+		String googleClientId = environment.getProperty("google.clientId");
+		String googleClientSecret = environment.getProperty("google.clientSecret");
+		log.info("googleClientId:{}, googleClientSecret:{}", googleClientId, googleClientSecret);
+
+		registry.addConnectionFactory(new FacebookConnectionFactory(facebookClinetId, facebookAppSecret));
+		registry.addConnectionFactory(new GoogleConnectionFactory(googleClientId, googleClientSecret));
 
 		return registry;
 	}
@@ -132,6 +143,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		return usersConnectionRepository().createConnectionRepository(authentication.getName());
 	}
+
+    @Bean
+    @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
+    public Google google(ConnectionRepository repository) {
+        Connection<Google> connection = repository.findPrimaryConnection(Google.class);
+
+        return connection != null ? connection.getApi() : null;
+    }
 
 	@Bean
 	public UsersConnectionRepository usersConnectionRepository() {

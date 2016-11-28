@@ -4,6 +4,7 @@ import com.bazlur.screening.domain.Role;
 import com.bazlur.screening.domain.User;
 import com.bazlur.screening.domain.UserRole;
 import com.bazlur.screening.dto.FacebookDTO;
+import com.bazlur.screening.dto.GoogleDTO;
 import com.bazlur.screening.dto.SignupForm;
 import com.bazlur.screening.repository.UserRepository;
 import com.bazlur.screening.utils.StringUtils;
@@ -107,6 +108,11 @@ public class SignupServiceImpl implements SignupService {
 
 		SecurityContextHolder.clearContext();
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
+
+	@Override
+	public void loginOrCreateGoogleUser(GoogleDTO dto) {
+
 	}
 
 	private Set<UserRole> createUserRoles(User user) {

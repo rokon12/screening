@@ -2,6 +2,7 @@ package com.bazlur.screening.service;
 
 import com.bazlur.screening.domain.User;
 import com.bazlur.screening.dto.FacebookDTO;
+import com.bazlur.screening.dto.GoogleDTO;
 import com.bazlur.screening.dto.SignupForm;
 
 import java.util.Set;
@@ -17,4 +18,6 @@ public interface SignupService {
 	User createNewUser(SignupForm signupForm);
 
 	void loginOrCreateFacebookUser(FacebookDTO dto);
+
+	void loginOrCreateGoogleUser(GoogleDTO dto);
 }

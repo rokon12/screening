@@ -44,6 +44,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-social-facebook')
 	compile('org.springframework.boot:spring-boot-starter-social-linkedin')
 	compile('org.springframework.boot:spring-boot-starter-social-twitter')
+	compile group: 'org.springframework.social', name: 'spring-social-google', version: '1.0.0.RELEASE'
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-websocket')
