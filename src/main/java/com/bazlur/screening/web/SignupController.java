@@ -45,7 +45,7 @@ public class SignupController {
 		}
 
 		signupService.createNewUser(signupForm);
-		redirectAttributes.addAttribute("message", "Your sign up has been successful");
+		redirectAttributes.addFlashAttribute("message", "Your sign up has been successful");
 
 		return "redirect:/login";
 	}

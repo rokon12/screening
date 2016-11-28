@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 @ToString
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false, exclude = "userRoles")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseEntity<Long> implements UserDetails, NonDeletable {
@@ -50,12 +50,11 @@ public class User extends BaseEntity<Long> implements UserDetails, NonDeletable 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<UserRole> userRoles = new HashSet<>();
 
-	@Column(nullable = false)
-	private boolean enabled = Boolean.TRUE; //TODO by default it should be false, after email confirmation this should be enabled
-	private boolean credentialsNonExpired = Boolean.TRUE;
-	private boolean accountNonExpired = Boolean.TRUE;
-	private boolean accountNonLocked = Boolean.TRUE;
-	private Boolean deleted = Boolean.FALSE;
+	private Boolean enabled; //TODO by default it should be false, after email confirmation this should be enabled
+	private Boolean credentialsNonExpired;
+	private Boolean accountNonExpired;
+	private Boolean accountNonLocked;
+	private Boolean deleted;
 
 	@Transient
 	private List<SimpleGrantedAuthority> simpleGrantedAuthorityList;

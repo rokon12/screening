@@ -5,5 +5,5 @@ package com.bazlur.screening.domain;
  * @since 11/28/16.
  */
 public enum Role {
-	USER, ADMIIN, SUPER_ADMIN
+	ROLE_USER, ROLE_ADMIIN, ROLE_SUPER_ADMIN
 }

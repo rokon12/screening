@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Entity
 @Data
 @Builder
-@ToString
-@EqualsAndHashCode(callSuper = true)
+@ToString(exclude = "user")
+@EqualsAndHashCode(exclude = "user", callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRole extends BaseEntity<Long>{
@@ -32,4 +32,6 @@ public class UserRole extends BaseEntity<Long>{
 	public Long getId() {
 		return id;
 	}
+
+
 }
