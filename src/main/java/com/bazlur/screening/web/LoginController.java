@@ -1,7 +1,18 @@
 package com.bazlur.screening.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -9,10 +20,28 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class LoginController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
 	@GetMapping("login")
 	public String login() {
+		LOGGER.info("Returning login page");
 
 		return "login";
+	}
+
+	@RequestMapping(value = { "/logout" }, method = RequestMethod.POST)
+	public String logout(HttpServletRequest request, Model model, Principal principal) throws ServletException {
+		if (null != principal) {
+			SecurityContextHolder.clearContext();
+
+			HttpSession session = request.getSession(false);
+			if (session != null) {
+				session.invalidate();
+			}
+
+			request.logout();
+		}
+
+		return "redirect:/";
 	}
 }

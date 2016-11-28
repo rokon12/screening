@@ -1,6 +1,7 @@
 package com.bazlur.screening.service;
 
 import com.bazlur.screening.domain.User;
+import com.bazlur.screening.dto.FacebookDTO;
 import com.bazlur.screening.dto.SignupForm;
 
 import java.util.Set;
@@ -14,4 +15,6 @@ public interface SignupService {
 	Set<User> findByEmail(String email);
 
 	User createNewUser(SignupForm signupForm);
+
+	void loginOrCreateFacebookUser(FacebookDTO dto);
 }
