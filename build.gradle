@@ -37,6 +37,8 @@ configurations {
 	providedRuntime
 }
 
+//ext['thymeleaf-layout-dialect.version'] = '2.0.0'
+
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-aop')
 	compile('org.springframework.boot:spring-boot-starter-cache')
@@ -44,12 +46,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-mobile')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-social-facebook')
-	compile('org.springframework.boot:spring-boot-starter-social-linkedin')
-	compile('org.springframework.boot:spring-boot-starter-social-twitter')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-websocket')
-	compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.1.1'
 
 	runtime('com.h2database:h2')
 	runtime('mysql:mysql-connector-java')

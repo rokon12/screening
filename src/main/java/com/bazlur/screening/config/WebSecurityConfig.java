@@ -7,6 +7,7 @@ import com.bazlur.screening.security.SecurityAuthenticationSuccessHandler;
 import com.bazlur.screening.service.SignupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -32,7 +33,6 @@ import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -47,23 +47,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final Logger log = LoggerFactory.getLogger(WebSecurityConfig.class);
 
-	@Inject
+	@Autowired
 	private SecurityAuthenticationProvider securityAuthenticationProvider;
 
-	@Inject
+	@Autowired
 	private Environment environment;
 
-	@Inject
+	@Autowired
 	private SignupService signupService;
 
-	@Inject
+	@Autowired
 	private DataSource dataSource;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/css/**", "/js/**", "/img/**", "/plugins/**", "/bootstrap/**").permitAll()
-			.antMatchers("/", "/home").permitAll()
+			.antMatchers("/", "/home").authenticated()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/signup").permitAll()
 			.antMatchers("/connect/**").permitAll()

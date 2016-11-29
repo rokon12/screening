@@ -31,7 +31,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = {"", "/", "/home"}, method = RequestMethod.GET)
-	public String home(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) {
+	public String index(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) {
 
 		if (null != principal) {
 			Optional<User> user = this.userRepository.findOneByEmail(principal.getName());
@@ -45,6 +45,6 @@ public class HomeController {
 			rememberMeServices.loginSuccess(request, response, SecurityContextHolder.getContext().getAuthentication());
 		}
 
-		return "home";
+		return "home/index";
 	}
 }
