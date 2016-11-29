@@ -1,6 +1,6 @@
 package com.bazlur.screening.config;
 
-import com.bazlur.screening.interceptor.CustomConnectInterceptor;
+import com.bazlur.screening.interceptor.FacebookConnectInterceptor;
 import com.bazlur.screening.security.SecurityAuthenticationFailureHandler;
 import com.bazlur.screening.security.SecurityAuthenticationProvider;
 import com.bazlur.screening.security.SecurityAuthenticationSuccessHandler;
@@ -105,7 +105,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public ConnectController connectController() {
 		ConnectController controller = new ConnectController(connectionFactoryLocator(), connectionRepository());
-		controller.addInterceptor(new CustomConnectInterceptor(signupService));
+		controller.addInterceptor(new FacebookConnectInterceptor(signupService));
 
 		return controller;
 	}

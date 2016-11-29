@@ -45,9 +45,9 @@ public class SignupServiceImpl implements SignupService {
 	private MessageDigestPasswordEncoder messageDigestPasswordEncoder;
 
 	@Override
-	public Set<User> findByEmail(String email) {
+	public Optional<User> findByEmail(String email) {
 
-		return userRepository.findByEmail(email);
+		return userRepository.findOneByEmail(email);
 	}
 
 	@Override

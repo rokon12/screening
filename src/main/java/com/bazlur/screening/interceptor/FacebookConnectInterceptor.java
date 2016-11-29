@@ -16,12 +16,12 @@ import org.springframework.web.context.request.WebRequest;
  * @author Bazlur Rahman Rokon
  * @since 11/28/16.
  */
-public class CustomConnectInterceptor implements ConnectInterceptor<Facebook> {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CustomConnectInterceptor.class);
+public class FacebookConnectInterceptor implements ConnectInterceptor<Facebook> {
+	private static final Logger LOGGER = LoggerFactory.getLogger(FacebookConnectInterceptor.class);
 
 	private SignupService signupService;
 
-	public CustomConnectInterceptor(SignupService signupService) {
+	public FacebookConnectInterceptor(SignupService signupService) {
 		this.signupService = signupService;
 	}
 
@@ -47,12 +47,14 @@ public class CustomConnectInterceptor implements ConnectInterceptor<Facebook> {
 	}
 
 	private String getImageUrl(Connection<Facebook> connection, int height, int width) {
+
 		return connection.getImageUrl() + "?height=x&width=y".replaceAll("x", Integer.toString(height)).replace("y", Integer.toString(width));
 	}
 
 	private String extractId(String profileUrl) {
 		profileUrl = profileUrl.replace("https://www.facebook.com/app_scoped_user_id/", "");
 		profileUrl = profileUrl.replace("/", "");
+
 		return profileUrl;
 	}
 }

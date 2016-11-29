@@ -13,7 +13,6 @@ import java.util.Set;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	Set<User> findByEmail(String email);
 
 	Optional<User> findOneByEmail(String email);
 

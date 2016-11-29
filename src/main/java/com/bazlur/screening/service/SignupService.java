@@ -4,7 +4,7 @@ import com.bazlur.screening.domain.User;
 import com.bazlur.screening.dto.FacebookDTO;
 import com.bazlur.screening.dto.SignupForm;
 
-import java.util.Set;
+import java.util.Optional;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public interface SignupService {
 
-	Set<User> findByEmail(String email);
+	Optional<User> findByEmail(String email);
 
 	User createNewUser(SignupForm signupForm);
 
