@@ -116,7 +116,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		String clinetId = environment.getProperty("facebook.clientId");
 		String appSecret = environment.getProperty("facebook.clientSecret");
 
-		log.info("clinetId:{}, appSecret:{}", clinetId, appSecret);
 		registry.addConnectionFactory(new FacebookConnectionFactory(clinetId, appSecret));
 
 		return registry;

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @MappedSuperclass
 public abstract class BaseEntity<ID> implements Serializable {
+
 	@Version
 	private Long version;
 
