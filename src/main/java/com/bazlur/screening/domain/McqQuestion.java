@@ -1,13 +1,11 @@
 package com.bazlur.screening.domain;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,13 +14,13 @@ import java.util.Set;
  */
 @Data
 @Entity
-@Builder
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @DiscriminatorValue("MCQ")
+@NoArgsConstructor
 public class McqQuestion extends Question {
 	private boolean allowMultiChoice;
 
 	@OneToMany
-	private Set<Option> options;
+	private Set<Option> options = new HashSet<>();
 }

@@ -16,10 +16,11 @@
                 sidebar
                 is bigger than your content because it prevents extra unwanted scrolling.</p>
         </div>
+
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Title</h3>
+                <h3 class="box-title">Questions</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -32,8 +33,43 @@
             </div>
 
             <div class="box-body">
-                Start creating your amazing application!
+                <!-- /.box-header -->
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>ID</th>
+                            <th>Difficulty</th>
+                            <th>Max Score</th>
+                            <th>Allocated Time</th>
+                            <th>Name</th>
+                            <th>#</th>
+                        </tr>
+
+                        <tr th:each="question, itrStat : ${questions}">
+                            <td th:text="${itrStat.index}">A Smoke Test'</td>
+                            <td th:text="${question.difficulty}">A Smoke Test'</td>
+                            <td th:text="${question.maxScore}">A Smoke Test'</td>
+                            <td th:text="${question.allocatedTime}">A Smoke Test'</td>
+                            <td th:text="${question.name}">A Smoke Test'</td>
+                            <td>
+                                <a class="btn btn-app">
+                                <i class="fa fa-edit"></i> Edit
+                                </a>
+
+                                <a class="btn btn-app">
+                                    <i class="fa fa-bar-chart"></i> Inside
+                                </a>
+
+                                <a class="btn btn-app">
+                                    <i class="fa fa-remove"></i> Remove
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- /.box-body -->
             </div>
+
             <!-- /.box-body -->
             <div class="box-footer">
                 Footer

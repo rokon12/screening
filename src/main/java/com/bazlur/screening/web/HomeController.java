@@ -1,7 +1,9 @@
 package com.bazlur.screening.web;
 
+import com.bazlur.screening.domain.Question;
 import com.bazlur.screening.domain.User;
 import com.bazlur.screening.repository.UserRepository;
+import com.bazlur.screening.service.QuestionService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,6 +26,9 @@ import java.util.Optional;
 public class HomeController {
 	private UserRepository userRepository;
 	private RememberMeServices rememberMeServices;
+
+	@Inject
+	private QuestionService questionService;
 
 	@Inject
 	public HomeController(UserRepository userRepository, RememberMeServices rememberMeServices) {
@@ -44,6 +50,9 @@ public class HomeController {
 			//Move where-ever you want this! (though check for a principal)
 			rememberMeServices.loginSuccess(request, response, SecurityContextHolder.getContext().getAuthentication());
 		}
+
+		List<Question> questions = questionService.findAllQuestions();
+		model.addAttribute("questions", questions);
 
 		return "home/index";
 	}

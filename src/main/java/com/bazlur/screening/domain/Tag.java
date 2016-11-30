@@ -1,6 +1,8 @@
 package com.bazlur.screening.domain;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -9,7 +11,9 @@ import javax.persistence.*;
  * @since 11/30/16.
  */
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class Tag extends AuditableEntity<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +21,13 @@ public class Tag extends AuditableEntity<Long> {
 
 	@Column(length = 100)
 	private String name;
+
+	public Tag() {
+	}
+
+	public Tag(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public Long getId() {

@@ -1,9 +1,6 @@
 package com.bazlur.screening.domain;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -14,9 +11,9 @@ import javax.persistence.Entity;
  */
 @Data
 @Entity
-@Builder
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @DiscriminatorValue("SUBJECTIVE")
+@NoArgsConstructor
 public class SubjectiveQuestion extends Question {
 }

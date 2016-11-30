@@ -1,11 +1,9 @@
 package com.bazlur.screening.domain;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.InheritanceType.JOINED;
@@ -20,6 +18,7 @@ import static javax.persistence.InheritanceType.JOINED;
 @EqualsAndHashCode(callSuper = true)
 @Inheritance(strategy = JOINED)
 @DiscriminatorColumn(name = "QUESTION_TYPE")
+@NoArgsConstructor
 public abstract class Question extends AuditableEntity<Long> {
 
 	@Id
@@ -30,7 +29,7 @@ public abstract class Question extends AuditableEntity<Long> {
 	@Enumerated(EnumType.STRING)
 	private Difficulty difficulty;
 
-	private Long maxScore;
+	private Integer maxScore;
 
 	@Column(length = 200)
 	private String name;
@@ -43,8 +42,8 @@ public abstract class Question extends AuditableEntity<Long> {
 	@Column(columnDefinition = "text")
 	private String additionalNotes; //Optional
 
-	@ManyToMany
-	private Set<Tag> tags;
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+	private Set<Tag> tags = new HashSet<>();
 
 	@Override
 	public Long getId() {
