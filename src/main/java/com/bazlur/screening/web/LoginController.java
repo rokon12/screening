@@ -6,8 +6,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +27,7 @@ public class LoginController {
 		return "login";
 	}
 
-	@RequestMapping(value = { "/logout" }, method = RequestMethod.POST)
+	@GetMapping(value = { "/logout" })
 	public String logout(HttpServletRequest request, Model model, Principal principal) throws ServletException {
 		if (null != principal) {
 			SecurityContextHolder.clearContext();
