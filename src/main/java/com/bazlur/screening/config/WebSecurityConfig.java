@@ -12,8 +12,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -43,6 +46,7 @@ import java.lang.reflect.Modifier;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final Logger log = LoggerFactory.getLogger(WebSecurityConfig.class);
@@ -178,4 +182,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			log.error("failed in post construct", ex);
 		}
 	}
+
+	@Configuration
+	@Order(Ordered.HIGHEST_PRECEDENCE)
+	static class  BasicSecurityConfig extends WebSecurityConfigurerAdapter{
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.csrf().disable();
+            http.antMatcher("/api/**") //
+                    .authorizeRequests().anyRequest().permitAll() //TODO for now
+                    .and() //
+                    .httpBasic();
+        }
+    }
 }

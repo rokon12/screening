@@ -5,6 +5,7 @@ import com.bazlur.screening.domain.QuestionType;
 import lombok.*;
 import org.springframework.hateoas.core.Relation;
 
+import javax.persistence.Version;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,8 @@ import java.util.Set;
 @Relation(value = "question", collectionRelation = "questions")
 public class QuestionDTO {
     private Long id;
+    @Version
+    private Long version; //this one required for ETag
     private Difficulty difficulty;
     private QuestionType questionType;
     private Integer maxScore;
