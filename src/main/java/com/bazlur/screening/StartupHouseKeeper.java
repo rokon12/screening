@@ -66,16 +66,16 @@ public class StartupHouseKeeper implements ApplicationListener<ContextRefreshedE
 		subjectiveQuestion2.setLastUpdatedBy("Bazlur Rahman");
 
 		Tag java = new Tag("Java");
-		javaScript.setCreatedBy("Bazlur Rahman");
-		javaScript.setLastUpdatedBy("Bazlur Rahman");
+		java.setCreatedBy("Bazlur Rahman");
+		java.setLastUpdatedBy("Bazlur Rahman");
 
 		Tag c = new Tag("C#");
-		webApplication.setCreatedBy("Bazlur Rahman");
-		webApplication.setLastUpdatedBy("Bazlur Rahman");
+		c.setCreatedBy("Bazlur Rahman");
+		c.setLastUpdatedBy("Bazlur Rahman");
 
 		Set<Tag> tags2 = Stream.of(java, c).collect(Collectors.toSet());
 
-		subjectiveQuestion.getTags().addAll(tags2);
+		subjectiveQuestion2.getTags().addAll(tags2);
 		subjectiveQuestionRepository.saveAndFlush(subjectiveQuestion2);
 	}
 }
