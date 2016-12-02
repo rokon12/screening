@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorator="layout">
+<html layout:decorator="layout" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <title>Home</title>
     <link rel="icon" th:href="@{/img/avatar.png}"/>
@@ -35,37 +35,7 @@
             <div class="box-body">
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover">
-                        <tr>
-                            <th>ID</th>
-                            <th>Difficulty</th>
-                            <th>Max Score</th>
-                            <th>Allocated Time</th>
-                            <th>Name</th>
-                            <th>#</th>
-                        </tr>
-
-                        <tr th:each="question, itrStat : ${questions}">
-                            <td th:text="${itrStat.index}">A Smoke Test'</td>
-                            <td th:text="${question.difficulty}">A Smoke Test'</td>
-                            <td th:text="${question.maxScore}">A Smoke Test'</td>
-                            <td th:text="${question.allocatedTime}">A Smoke Test'</td>
-                            <td th:text="${question.name}">A Smoke Test'</td>
-                            <td>
-                                <a class="btn btn-app">
-                                <i class="fa fa-edit"></i> Edit
-                                </a>
-
-                                <a class="btn btn-app">
-                                    <i class="fa fa-bar-chart"></i> Inside
-                                </a>
-
-                                <a class="btn btn-app">
-                                    <i class="fa fa-remove"></i> Remove
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
+                    <div id="react"></div>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -73,6 +43,7 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 Footer
+
             </div>
             <!-- /.box-footer-->
         </div>
@@ -81,5 +52,11 @@
     </section>
     <!-- /.content -->
 </div>
+
+
+<div layout:fragment="custom-scripts">
+    <script src="../../built/bundle" th:src="@{/built/bundle.js}"></script>
+</div>
+
 </body>
 </html>

@@ -6,3 +6,4 @@
 *.iml
 *.ipr
 /classes
+/node_modules
