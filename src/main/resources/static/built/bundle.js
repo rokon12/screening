@@ -51,200 +51,160 @@
 	
 	'use strict';
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	const React = __webpack_require__(1);
+	const ReactDOM = __webpack_require__(32);
+	const client = __webpack_require__(178);
+	const Button = __webpack_require__(226).Button;
+	const ButtonToolbar = __webpack_require__(226).ButtonToolbar;
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(32);
-	var client = __webpack_require__(178);
-	var Button = __webpack_require__(226).Button;
-	var FontAwesome = __webpack_require__(478);
-	
-	var App = function (_React$Component) {
-	    _inherits(App, _React$Component);
-	
-	    function App(props) {
-	        _classCallCheck(this, App);
-	
-	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-	
-	        _this.state = { questions: [] };
-	        return _this;
+	class App extends React.Component {
+	    constructor(props) {
+	        super(props);
+	        this.state = { questions: [] };
 	    }
 	
-	    _createClass(App, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
-	
-	            client({ method: 'GET', path: '/api/v1/questions' }).done(function (response) {
-	                console.log(response);
-	                _this2.setState({ questions: response.entity._embedded.questions });
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return React.createElement(QuestionList, { questions: this.state.questions });
-	        }
-	    }]);
-	
-	    return App;
-	}(React.Component);
-	
-	var QuestionList = function (_React$Component2) {
-	    _inherits(QuestionList, _React$Component2);
-	
-	    function QuestionList() {
-	        _classCallCheck(this, QuestionList);
-	
-	        return _possibleConstructorReturn(this, (QuestionList.__proto__ || Object.getPrototypeOf(QuestionList)).apply(this, arguments));
+	    componentDidMount() {
+	        client({ method: 'GET', path: '/api/v1/questions' }).done(response => {
+	            console.log(response);
+	            this.setState({ questions: response.entity._embedded.questions });
+	        });
 	    }
 	
-	    _createClass(QuestionList, [{
-	        key: 'render',
-	        value: function render() {
-	            var questions = this.props.questions.map(function (question) {
-	                return React.createElement(Question, { key: question._links.self.href, question: question });
-	            });
-	
-	            return React.createElement(
-	                'table',
-	                { className: 'table table-hover' },
-	                React.createElement(
-	                    'tbody',
-	                    null,
-	                    React.createElement(
-	                        'tr',
-	                        null,
-	                        React.createElement(
-	                            'th',
-	                            null,
-	                            'ID'
-	                        ),
-	                        React.createElement(
-	                            'th',
-	                            null,
-	                            'Difficulty'
-	                        ),
-	                        React.createElement(
-	                            'th',
-	                            null,
-	                            'Max Score'
-	                        ),
-	                        React.createElement(
-	                            'th',
-	                            null,
-	                            'Allocated Time (Seconds)'
-	                        ),
-	                        React.createElement(
-	                            'th',
-	                            null,
-	                            'Name'
-	                        ),
-	                        React.createElement(
-	                            'th',
-	                            null,
-	                            '#'
-	                        )
-	                    ),
-	                    questions
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return QuestionList;
-	}(React.Component);
-	
-	var Question = function (_React$Component3) {
-	    _inherits(Question, _React$Component3);
-	
-	    function Question() {
-	        _classCallCheck(this, Question);
-	
-	        return _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).apply(this, arguments));
+	    render() {
+	        return React.createElement(QuestionList, { questions: this.state.questions });
 	    }
+	}
 	
-	    _createClass(Question, [{
-	        key: 'render',
-	        value: function render() {
-	            return React.createElement(
-	                'tr',
+	class QuestionList extends React.Component {
+	    render() {
+	        var questions = this.props.questions.map(question => React.createElement(Question, { key: question.id, question: question }));
+	
+	        return React.createElement(
+	            'table',
+	            { className: 'table table-hover' },
+	            React.createElement(
+	                'tbody',
 	                null,
 	                React.createElement(
-	                    'td',
-	                    null,
-	                    this.props.question.id
-	                ),
-	                React.createElement(
-	                    'td',
-	                    null,
-	                    this.props.question.difficulty
-	                ),
-	                React.createElement(
-	                    'td',
-	                    null,
-	                    this.props.question.maxScore
-	                ),
-	                React.createElement(
-	                    'td',
-	                    null,
-	                    this.props.question.allocatedTime
-	                ),
-	                React.createElement(
-	                    'td',
-	                    null,
-	                    this.props.question.name
-	                ),
-	                React.createElement(
-	                    'td',
+	                    'tr',
 	                    null,
 	                    React.createElement(
-	                        'div',
-	                        { className: 'btn-toolbar' },
-	                        React.createElement(ControlButton, { clazz: 'fa fa-edit', name: 'Edit' }),
-	                        React.createElement(ControlButton, { clazz: 'fa fa-bar-chart', name: 'Inside' }),
-	                        React.createElement(ControlButton, { clazz: 'fa fa-remove', name: 'Delete' })
+	                        'th',
+	                        null,
+	                        'ID'
+	                    ),
+	                    React.createElement(
+	                        'th',
+	                        null,
+	                        'Difficulty'
+	                    ),
+	                    React.createElement(
+	                        'th',
+	                        null,
+	                        'Max Score'
+	                    ),
+	                    React.createElement(
+	                        'th',
+	                        null,
+	                        'Allocated Time (Seconds)'
+	                    ),
+	                    React.createElement(
+	                        'th',
+	                        null,
+	                        'Name'
+	                    ),
+	                    React.createElement(
+	                        'th',
+	                        null,
+	                        '#'
 	                    )
-	                )
-	            );
-	        }
-	    }]);
+	                ),
+	                questions
+	            )
+	        );
+	    }
+	}
 	
-	    return Question;
-	}(React.Component);
+	class Question extends React.Component {
+	    constructor(props) {
+	        super(props);
 	
-	var ControlButton = function (_React$Component4) {
-	    _inherits(ControlButton, _React$Component4);
+	        this.showInside = event => {
+	            console.log("id: " + this.state.question.id);
+	        };
 	
-	    function ControlButton() {
-	        _classCallCheck(this, ControlButton);
+	        this.editQuestion = event => {
+	            console.log("edit: " + this.state.question.id);
+	        };
 	
-	        return _possibleConstructorReturn(this, (ControlButton.__proto__ || Object.getPrototypeOf(ControlButton)).apply(this, arguments));
+	        this.deleteQuestion = event => {
+	            console.log("delete: " + this.state.question.id);
+	        };
+	
+	        this.state = { question: this.props.question };
 	    }
 	
-	    _createClass(ControlButton, [{
-	        key: 'render',
-	        value: function render() {
-	            return React.createElement(
-	                'a',
-	                { className: 'btn btn-default btn-xs' },
-	                ' ',
-	                React.createElement('i', { className: this.props.clazz }),
-	                ' ',
-	                this.props.name
-	            );
-	        }
-	    }]);
-	
-	    return ControlButton;
-	}(React.Component);
+	    render() {
+	        return React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	                'td',
+	                null,
+	                this.state.question.id
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                this.state.question.difficulty
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                this.state.question.maxScore
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                this.state.question.allocatedTime
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                this.state.question.name
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                React.createElement(
+	                    ButtonToolbar,
+	                    null,
+	                    React.createElement(
+	                        Button,
+	                        { bsSize: 'xs', href: '#', onClick: this.editQuestion },
+	                        ' ',
+	                        React.createElement('i', { className: 'fa fa-edit' }),
+	                        ' Edit'
+	                    ),
+	                    React.createElement(
+	                        Button,
+	                        { bsSize: 'xs', href: '#', onClick: this.showInside },
+	                        ' ',
+	                        React.createElement('i', { className: 'fa fa-bar-chart' }),
+	                        ' Inside'
+	                    ),
+	                    React.createElement(
+	                        Button,
+	                        { bsSize: 'xs', href: '#', onClick: this.deleteQuestion },
+	                        ' ',
+	                        React.createElement('i', { className: 'fa fa-remove' }),
+	                        ' Delete'
+	                    )
+	                )
+	            )
+	        );
+	    }
+	}
 	
 	ReactDOM.render(React.createElement(App, null), document.getElementById('react'));
 
@@ -22420,7 +22380,7 @@
 /* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process) {/** @license MIT License (c) copyright 2010-2014 original author or authors */
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process) {/** @license MIT License (c) copyright 2010-2014 original author or authors */
 	/** @author Brian Cavalier */
 	/** @author John Hann */
 	
@@ -26540,21 +26500,19 @@
 /* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
-	
-	!(__WEBPACK_AMD_DEFINE_RESULT__ = function (require) {
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function (require) {
 		'use strict';
 	
 		var interceptor = __webpack_require__(208);
 	
 		return interceptor({
-			request: function request(_request /*, config, meta */) {
+			request: function (request /*, config, meta */) {
 				/* If the URI is a URI Template per RFC 6570 (http://tools.ietf.org/html/rfc6570), trim out the template part */
-				if (_request.path.indexOf('{') === -1) {
-					return _request;
+				if (request.path.indexOf('{') === -1) {
+					return request;
 				} else {
-					_request.path = _request.path.split('{')[0];
-					return _request;
+					request.path = request.path.split('{')[0];
+					return request;
 				}
 			}
 		});
@@ -26617,9 +26575,7 @@
 /* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
-	
-	/**
+	var __WEBPACK_AMD_DEFINE_RESULT__;/**
 	    * @author Bazlur Rahman Rokon
 	    * @since 12/2/16.
 	    */
@@ -26627,8 +26583,8 @@
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 	
 	    return {
-	        read: function read(str) {},
-	        write: function write(obj /*, opts */) {
+	        read: function (str) {},
+	        write: function (obj /*, opts */) {
 	            // If this is an Array, extract the self URI and then join using a newline
 	            if (obj instanceof Array) {
 	                return obj.map(function (resource) {
@@ -45466,134 +45422,6 @@
 	exports.bootstrapUtils = _bootstrapUtils;
 	exports.createChainedFunction = _createChainedFunction3['default'];
 	exports.ValidComponentChildren = _ValidComponentChildren3['default'];
-
-/***/ },
-/* 478 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.srOnlyStyle = undefined;
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	var srOnlyStyle = exports.srOnlyStyle = {
-	  position: 'absolute',
-	  width: '1px',
-	  height: '1px',
-	  padding: '0px',
-	  margin: '-1px',
-	  overflow: 'hidden',
-	  clip: 'rect(0px, 0px, 0px, 0px)',
-	  border: '0px'
-	};
-	
-	/**
-	 * A React component for the font-awesome icon library.
-	 *
-	 *
-	 * @param {String} [ariaLabel] An extra accessibility label to put on the icon
-	 * @param {Boolean} [border=false] Whether or not to show a border radius
-	 * @param {String} [className] An extra set of CSS classes to add to the component
-	 * @param {Object} [cssModule] Option to pass FontAwesome CSS as a module
-	 * @param {Boolean} [fixedWidth=false] Make buttons fixed width
-	 * @param {String} [flip=false] Flip the icon's orientation.
-	 * @param {Boolean} [inverse=false]Inverse the icon's color
-	 * @param {String} name Name of the icon to use
-	 * @param {Boolean} [pulse=false] Rotate icon with 8 steps (rather than smoothly)
-	 * @param {Number} [rotate] The degress to rotate the icon by
-	 * @param {String} [size] The icon scaling size
-	 * @param {Boolean} [spin=false] Spin the icon
-	 * @param {String} [stack] Stack an icon on top of another
-	 * @param {String} [tag=span] The HTML tag to use as a string (eg 'i' or 'em')
-	 * @module FontAwesome
-	 * @type {ReactClass}
-	 */
-	exports.default = _react2.default.createClass({
-	
-	  displayName: 'FontAwesome',
-	
-	  propTypes: {
-	    ariaLabel: _react2.default.PropTypes.string,
-	    border: _react2.default.PropTypes.bool,
-	    className: _react2.default.PropTypes.string,
-	    cssModule: _react2.default.PropTypes.object,
-	    fixedWidth: _react2.default.PropTypes.bool,
-	    flip: _react2.default.PropTypes.oneOf(['horizontal', 'vertical']),
-	    inverse: _react2.default.PropTypes.bool,
-	    name: _react2.default.PropTypes.string.isRequired,
-	    pulse: _react2.default.PropTypes.bool,
-	    rotate: _react2.default.PropTypes.oneOf([90, 180, 270]),
-	    size: _react2.default.PropTypes.oneOf(['lg', '2x', '3x', '4x', '5x']),
-	    spin: _react2.default.PropTypes.bool,
-	    stack: _react2.default.PropTypes.oneOf(['1x', '2x']),
-	    tag: _react2.default.PropTypes.string
-	  },
-	
-	  render: function render() {
-	    var _props = this.props;
-	    var border = _props.border;
-	    var cssModule = _props.cssModule;
-	    var className = _props.className;
-	    var fixedWidth = _props.fixedWidth;
-	    var flip = _props.flip;
-	    var inverse = _props.inverse;
-	    var name = _props.name;
-	    var pulse = _props.pulse;
-	    var rotate = _props.rotate;
-	    var size = _props.size;
-	    var spin = _props.spin;
-	    var stack = _props.stack;
-	    var _props$tag = _props.tag;
-	    var tag = _props$tag === undefined ? 'span' : _props$tag;
-	    var ariaLabel = _props.ariaLabel;
-	
-	    var props = _objectWithoutProperties(_props, ['border', 'cssModule', 'className', 'fixedWidth', 'flip', 'inverse', 'name', 'pulse', 'rotate', 'size', 'spin', 'stack', 'tag', 'ariaLabel']);
-	
-	    var classNames = [];
-	
-	    if (cssModule) {
-	      classNames.push(cssModule['fa']);
-	      classNames.push(cssModule['fa-' + name]);
-	      size && classNames.push(cssModule['fa-' + size]);
-	      spin && classNames.push(cssModule['fa-spin']);
-	      pulse && classNames.push(cssModule['fa-pulse']);
-	      border && classNames.push(cssModule['fa-border']);
-	      fixedWidth && classNames.push(cssModule['fa-fw']);
-	      inverse && classNames.push(cssModule['fa-inverse']);
-	      flip && classNames.push(cssModule['fa-flip-' + flip]);
-	      rotate && classNames.push(cssModule['fa-rotate-' + rotate]);
-	      stack && classNames.push(cssModule['fa-stack-' + stack]);
-	    } else {
-	      classNames.push('fa');
-	      classNames.push('fa-' + name);
-	      size && classNames.push('fa-' + size);
-	      spin && classNames.push('fa-spin');
-	      pulse && classNames.push('fa-pulse');
-	      border && classNames.push('fa-border');
-	      fixedWidth && classNames.push('fa-fw');
-	      inverse && classNames.push('fa-inverse');
-	      flip && classNames.push('fa-flip-' + flip);
-	      rotate && classNames.push('fa-rotate-' + rotate);
-	      stack && classNames.push('fa-stack-' + stack);
-	    }
-	
-	    // Add any custom class names at the end.
-	    className && classNames.push(className);
-	    return _react2.default.createElement(tag, _extends({}, props, { 'aria-hidden': true, className: classNames.join(' ') }), ariaLabel ? _react2.default.createElement('span', { style: srOnlyStyle }, ariaLabel) : null);
-	  }
-	});
 
 /***/ }
 /******/ ]);

@@ -1,6 +1,5 @@
 var path = require('path');
 
-
 module.exports = {
     entry: './src/main/js/app.js',
     devtool: 'sourcemaps',
@@ -18,7 +17,8 @@ module.exports = {
                 loader: 'babel',
                 query: {
                     cacheDirectory: true,
-                    presets: ['es2015', 'react']
+                    presets: ['es2016', 'react'],
+                    plugins: ['transform-class-properties']
                 }
             }
         ]

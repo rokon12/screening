@@ -6,10 +6,10 @@
 'use strict';
 
 const React = require('react');
-const ReactDOM = require('react-dom')
+const ReactDOM = require('react-dom');
 const client = require('./client');
 const Button = require('react-bootstrap').Button;
-const FontAwesome = require('react-fontawesome');
+const ButtonToolbar = require('react-bootstrap').ButtonToolbar;
 
 class App extends React.Component {
     constructor(props) {
@@ -35,7 +35,7 @@ class App extends React.Component {
 class QuestionList extends React.Component {
     render() {
         var questions = this.props.questions.map(question =>
-            <Question key={question._links.self.href} question={question}/>
+            <Question key={question.id} question={question}/>
         );
 
         return (
@@ -57,29 +57,39 @@ class QuestionList extends React.Component {
 }
 
 class Question extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {question: this.props.question};
+    }
+
+    showInside = (event) => {
+        console.log("id: " + this.state.question.id)
+    };
+
+    editQuestion = (event) => {
+        console.log("edit: " + this.state.question.id)
+    };
+
+    deleteQuestion = (event) => {
+        console.log("delete: " + this.state.question.id)
+    };
+
     render() {
         return (  <tr>
-            <td>{this.props.question.id}</td>
-            <td>{this.props.question.difficulty}</td>
-            <td>{this.props.question.maxScore}</td>
-            <td>{this.props.question.allocatedTime}</td>
-            <td>{this.props.question.name}</td>
+            <td>{this.state.question.id}</td>
+            <td>{this.state.question.difficulty}</td>
+            <td>{this.state.question.maxScore}</td>
+            <td>{this.state.question.allocatedTime}</td>
+            <td>{this.state.question.name}</td>
+
             <td>
-                <div className="btn-toolbar">
-                    <ControlButton clazz='fa fa-edit' name='Edit'/>
-                    <ControlButton clazz='fa fa-bar-chart' name='Inside'/>
-                    <ControlButton clazz='fa fa-remove' name='Delete'/>
-                </div>
+                <ButtonToolbar>
+                    <Button bsSize="xs" href="#" onClick={this.editQuestion}> <i className="fa fa-edit"></i> Edit</Button>
+                    <Button bsSize="xs" href="#" onClick={this.showInside}> <i className="fa fa-bar-chart"></i> Inside</Button>
+                    <Button bsSize="xs" href="#" onClick={this.deleteQuestion}> <i className="fa fa-remove"></i> Delete</Button>
+                </ButtonToolbar>
             </td>
         </tr>)
-    }
-}
-
-class ControlButton extends React.Component {
-    render() {
-        return (
-            <a className="btn btn-default btn-xs"> <i className={this.props.clazz}></i> {this.props.name}</a>
-        )
     }
 }
 

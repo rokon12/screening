@@ -95,4 +95,4 @@ task webpack(type: NodeTask, dependsOn: 'npmInstall') {
 processResources.dependsOn 'webpack'
 
 clean.delete << file('node_modules')
-clean.delete << file('src/main/webapp/dist')
+clean.delete << file('src/main/resources/static/built')
