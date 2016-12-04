@@ -22,7 +22,9 @@ class Question extends React.Component {
     };
 
     deleteQuestion = (event) => {
-        console.log("delete: " + this.state.question.id)
+        event.preventDefault;
+        console.log("delete: " + this.state.question.id);
+        this.props.handleDelete(this.state.question.id);
     };
 
     render() {
