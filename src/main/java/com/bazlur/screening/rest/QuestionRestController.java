@@ -10,10 +10,8 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 
@@ -43,5 +41,11 @@ public class QuestionRestController {
     public QuestionResource findOne(@PathVariable("id") Long id) {
 
         return questionResourceAssembler.toResource(questionService.findOne(id));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteQuestion(@PathVariable Long id){
+	    questionService.delete(id);
     }
 }

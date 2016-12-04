@@ -7,27 +7,15 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import client from './client';
 import QuestionList from './components/QuestionList';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {questions: []};
-    }
-
-    componentDidMount() {
-        client({method: 'GET', path: '/api/v1/questions'})
-            .done(response => {
-                console.log(response);
-                this.setState({questions: response.entity._embedded.questions});
-            });
     }
 
     render() {
-        return (
-            <QuestionList questions={this.state.questions}/>
-        )
+        return ( <QuestionList/> )
     }
 }
 

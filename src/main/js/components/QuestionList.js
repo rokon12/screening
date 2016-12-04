@@ -5,21 +5,32 @@
 
 import React from 'react';
 import Question from './Question';
+import configureStore from '../stores/store'
+import * as actions from '../actions/actions'
 
 class QuestionList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {questions: []};
+        this.store = configureStore();
+        this.state = this.store.getState();
     }
 
-    componentWillReceiveProps(newProps) {
-        this.setState({questions: newProps.questions});
+    componentDidMount() {
+        this.unsubscribe = this.store.subscribe(() => {
+            this.setState(this.store.getState());
+        });
+
+        this.store.dispatch(actions.fetchQuestion());
+    }
+
+    componentWillUnmount() {
+        this.subscribe();
     }
 
     deleteQuestion = (id)=> {
-        var currentQuestions = this.state.questions;
-        var questions = currentQuestions.filter(question => question.id !== id);
-        this.setState({questions: questions});
+        // var currentQuestions = this.state.questions;
+        // var questions = currentQuestions.filter(question => question.id !== id);
+        // this.setState({questions: questions});
     };
 
     render() {

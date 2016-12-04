@@ -18,4 +18,6 @@ public interface QuestionService {
 	PageImpl<QuestionDTO> findAll(Pageable pageable);
 
 	QuestionDTO findOne(Long id);
+
+	void delete(Long id);
 }

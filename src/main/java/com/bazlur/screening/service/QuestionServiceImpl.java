@@ -55,6 +55,11 @@ public class QuestionServiceImpl implements QuestionService {
                 .orElseThrow(ResourceDoesNotExistException::new);
     }
 
+    @Override
+    public void delete(Long id) {
+        questionRepository.delete(id);
+    }
+
 
     private QuestionDTO convertToDto(Question question) {
 
