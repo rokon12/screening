@@ -3,8 +3,8 @@
  * @since 12/4/16.
  */
 
-const React = require('react');
-const Question = require('./Question');
+import React from 'react';
+import Question from './Question';
 
 class QuestionList extends React.Component {
     constructor(props) {
@@ -45,4 +45,4 @@ class QuestionList extends React.Component {
     }
 }
 
-module.exports = QuestionList;
+export default QuestionList;

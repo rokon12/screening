@@ -3,9 +3,8 @@
     * @since 12/3/16.
     */
 
-const React = require('react');
-const Button = require('react-bootstrap').Button;
-const ButtonToolbar = require('react-bootstrap').ButtonToolbar;
+import React from 'react';
+import {Button, ButtonToolbar} from 'react-bootstrap';
 
 class Question extends React.Component {
     constructor(props) {
@@ -22,7 +21,7 @@ class Question extends React.Component {
     };
 
     deleteQuestion = (event) => {
-        event.preventDefault;
+        event.preventDefault();
         console.log("delete: " + this.state.question.id);
         this.props.handleDelete(this.state.question.id);
     };
@@ -46,4 +45,4 @@ class Question extends React.Component {
     }
 }
 
-module.exports = Question;
+export default Question

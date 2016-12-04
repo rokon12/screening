@@ -5,10 +5,10 @@
 
 'use strict';
 
-const React = require('react');
-const ReactDOM = require('react-dom');
-const client = require('./client');
-const QuestionList = require('./components/QuestionList');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import client from './client';
+import QuestionList from './components/QuestionList';
 
 class App extends React.Component {
     constructor(props) {
