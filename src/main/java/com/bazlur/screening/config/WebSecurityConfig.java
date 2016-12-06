@@ -36,6 +36,7 @@ import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -51,17 +52,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final Logger log = LoggerFactory.getLogger(WebSecurityConfig.class);
 
-	@Autowired
-	private SecurityAuthenticationProvider securityAuthenticationProvider;
+	private final SecurityAuthenticationProvider securityAuthenticationProvider;
+	private final Environment environment;
+	private final SignupService signupService;
+	private final DataSource dataSource;
 
-	@Autowired
-	private Environment environment;
-
-	@Autowired
-	private SignupService signupService;
-
-	@Autowired
-	private DataSource dataSource;
+	@Inject
+	public WebSecurityConfig(SecurityAuthenticationProvider securityAuthenticationProvider, Environment environment, SignupService signupService, DataSource dataSource) {
+		this.securityAuthenticationProvider = securityAuthenticationProvider;
+		this.environment = environment;
+		this.signupService = signupService;
+		this.dataSource = dataSource;
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -117,10 +119,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public ConnectionFactoryLocator connectionFactoryLocator() {
 		ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-		String clinetId = environment.getProperty("facebook.clientId");
+		String clientId = environment.getProperty("facebook.clientId");
 		String appSecret = environment.getProperty("facebook.clientSecret");
 
-		registry.addConnectionFactory(new FacebookConnectionFactory(clinetId, appSecret));
+		registry.addConnectionFactory(new FacebookConnectionFactory(clientId, appSecret));
 
 		return registry;
 	}

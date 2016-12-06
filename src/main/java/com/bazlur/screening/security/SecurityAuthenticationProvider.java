@@ -5,7 +5,6 @@ import com.bazlur.screening.repository.UserRepository;
 import com.bazlur.screening.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.Optional;
 
 /**
@@ -26,11 +26,14 @@ import java.util.Optional;
 public class SecurityAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationProvider.class);
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
+	private final MessageDigestPasswordEncoder messageDigestPasswordEncoder;
 
-	@Autowired
-	private MessageDigestPasswordEncoder messageDigestPasswordEncoder;
+	@Inject
+	public SecurityAuthenticationProvider(UserRepository userRepository, MessageDigestPasswordEncoder messageDigestPasswordEncoder) {
+		this.userRepository = userRepository;
+		this.messageDigestPasswordEncoder = messageDigestPasswordEncoder;
+	}
 
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
