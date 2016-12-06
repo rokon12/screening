@@ -34,5 +34,4 @@ public class AuditingConfig {
 			return auth.getName();
 		}
 	}
-
 }

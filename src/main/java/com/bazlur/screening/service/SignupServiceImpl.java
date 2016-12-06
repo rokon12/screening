@@ -101,7 +101,7 @@ public class SignupServiceImpl implements SignupService {
 
 		Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 
-		//not neccesary any more
+		//not necessary any more
 		Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
 		connectionRepository.removeConnection(connection.getKey());
 

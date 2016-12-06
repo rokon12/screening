@@ -25,8 +25,12 @@ public class SignupController {
 	protected static final String MODEL_NAME_SIGNUP_DTO = "signupForm";
 	protected static final String ERROR_CODE_EMAIL_EXIST = "Exist.signupForm.email";
 
+	private final SignupService signupService;
+
 	@Inject
-	private SignupService signupService;
+	public SignupController(SignupService signupService) {
+		this.signupService = signupService;
+	}
 
 	@GetMapping("signup")
 	public String showSignUpForm(SignupForm signupForm) {
@@ -53,10 +57,8 @@ public class SignupController {
 		if (isNotEmpty(signupForm.getEmail())) {
 			Optional<User> userOptional = signupService.findByEmail(signupForm.getEmail());
 
-			if (userOptional.isPresent()) {
-				addFieldError(MODEL_NAME_SIGNUP_DTO, SignupForm.FIELD_NAME_EMAIL, signupForm.getEmail(),
-					ERROR_CODE_EMAIL_EXIST, result);
-			}
+			userOptional.ifPresent(user -> addFieldError(MODEL_NAME_SIGNUP_DTO, SignupForm.FIELD_NAME_EMAIL, signupForm.getEmail(),
+				ERROR_CODE_EMAIL_EXIST, result));
 		}
 	}
 }

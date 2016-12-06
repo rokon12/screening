@@ -27,13 +27,13 @@ public class HomeController {
 	private UserRepository userRepository;
 	private RememberMeServices rememberMeServices;
 
-	@Inject
-	private QuestionService questionService;
+	private final QuestionService questionService;
 
 	@Inject
-	public HomeController(UserRepository userRepository, RememberMeServices rememberMeServices) {
+	public HomeController(UserRepository userRepository, RememberMeServices rememberMeServices, QuestionService questionService) {
 		this.userRepository = userRepository;
 		this.rememberMeServices = rememberMeServices;
+		this.questionService = questionService;
 	}
 
 	@RequestMapping(value = {"", "/", "/home"}, method = RequestMethod.GET)

@@ -24,11 +24,14 @@ import javax.inject.Inject;
 @ExposesResourceFor(QuestionDTO.class)
 public class QuestionRestController {
 
-    @Inject
-    private QuestionResourceAssembler questionResourceAssembler;
+    private final QuestionResourceAssembler questionResourceAssembler;
+    private final QuestionService questionService;
 
     @Inject
-    private QuestionService questionService;
+    public QuestionRestController(QuestionResourceAssembler questionResourceAssembler, QuestionService questionService) {
+        this.questionResourceAssembler = questionResourceAssembler;
+        this.questionService = questionService;
+    }
 
     @GetMapping
     public PagedResources<QuestionResource> findAll(Pageable pageable, PagedResourcesAssembler<QuestionDTO> pagedResourcesAssembler) {
